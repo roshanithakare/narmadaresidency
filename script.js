@@ -70,13 +70,16 @@ if (filterButtons.length > 0 && roomCards.length > 0) {
 function togglePolicy() {
     const text = document.getElementById('policyText');
     const btn = document.querySelector('.view-details-btn');
-    if (text.style.webkitLineClamp === '2') {
+    // Always show full policy on first click
+    if (!text.classList.contains('expanded')) {
         text.style.webkitLineClamp = 'unset';
         text.style.display = 'block';
+        text.classList.add('expanded');
         btn.textContent = 'Show Less';
     } else {
         text.style.webkitLineClamp = '2';
         text.style.display = '-webkit-box';
+        text.classList.remove('expanded');
         btn.textContent = 'View Details';
     }
 }
