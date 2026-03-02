@@ -43,7 +43,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
+    padding: 10px 50px;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     background: transparent;
@@ -174,7 +174,7 @@ header.scrolled .hamburger span {
     position: relative;
     z-index: 2;
     max-width: 600px;
-    padding: 0 50px;
+    padding: 200px 50px;
     color: #fff;
     animation: fadeInLeft 1s ease-out;
 }
@@ -635,7 +635,7 @@ footer {
 }
 
 .footer-links {
-    text-align: center;
+    text-align: left;
 }
 
 .footer-links h4 {
@@ -653,17 +653,19 @@ footer {
     margin-bottom: 12px;
 }
 
+
+
 .footer-links ul li a {
-    color: #aaa;
+    display: inline-block;
+    color: #ccc;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .footer-links ul li a:hover {
-    color: #f39c12;
+    color: #fdfbf8;
+    transform: translateX(8px);  /* slight slide effect */
 }
-
 .footer-contact {
     text-align: center;
 }

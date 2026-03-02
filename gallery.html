@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -44,6 +45,7 @@
         .logo img {
             height: 70px;
             width: auto;
+            
         }
 
         .nav-menu {
@@ -74,11 +76,11 @@
         }
 
         .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
+                        border: 3px solid #FFC300;
+                        border-radius: 16px;
+                        box-shadow: 0 0 24px 6px #FFD700, 0 0 8px #FFC300 inset;
+                        padding: 6px;
+                        background: linear-gradient(135deg, #fffbe6 0%, #FFD700 60%, #FFC300 100%);
             flex-direction: column;
             cursor: pointer;
             z-index: 1001;
@@ -186,142 +188,7 @@
             background: #e67e22;
         }
 
-        footer {
-            background: #1a1a1a;
-            color: #ccc;
-            padding: 60px 20px 20px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-            gap: 40px;
-        }
-
-        .footer-brand {
-            text-align: center;
-        }
-
-        .footer-brand img {
-            height: 150px;
-            margin-bottom: 10px;
-        }
-
-        .footer-brand h3 {
-            font-size: 18px;
-            color: #f39c12;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .footer-brand p {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #aaa;
-            margin-bottom: 30px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .social-links a {
-            width: 45px;
-            height: 45px;
-            border: 2px solid #f39c12;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #f39c12;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .social-links a:hover {
-            background: #f39c12;
-            color: #fff;
-        }
-
-        .footer-links {
-            text-align: center;
-        }
-
-        .footer-links h4 {
-            font-size: 18px;
-            color: #f39c12;
-            margin-bottom: 20px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links ul li a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .footer-links ul li a:hover {
-            color: #f39c12;
-        }
-
-        .footer-contact {
-            text-align: center;
-        }
-
-        .footer-contact h4 {
-            font-size: 18px;
-            color: #f39c12;
-            margin-bottom: 20px;
-        }
-
-        .footer-contact p {
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 15px;
-        }
-
-        .footer-contact a {
-            color: #aaa;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .footer-contact a:hover {
-            color: #f39c12;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            font-size: 13px;
-            color: #777;
-        }
-
-        @media (max-width: 768px) {
-            .footer-container {
-                grid-template-columns: 1fr !important;
-                gap: 30px !important;
-            }
-
-            .footer-brand, .footer-links, .footer-contact {
-                text-align: center;
-            }
-        }
+  
     </style>
 </head>
 <body>
@@ -344,7 +211,7 @@
     </header>
 
     <section class="gallery-section">
-        <h1 class="gallery-title"><i class="fas fa-images"></i> Our Gallery <i class="fas fa-images"></i></h1>
+        <h1 class="gallery-title"></i> Our Gallery </i></h1>
         <div class="gallery-tabs">
             <button class="active" data-filter="exterior">Exterior</button>
             <button data-filter="interior">Interior</button>
