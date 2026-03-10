@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narmada Residency</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+           <img src="{% static 'img/logo.png' %}" alt="NR Logo">
+        </div>
+        <nav class="nav-menu">
+    <a href="{% url 'home' %}#hero">Home</a>
+    <a href="{% url 'home' %}#rooms-section">Rooms</a>
+    <a href="{% url 'home' %}#banquet-section">Banquet</a>
+    <a href="{% url 'gallery' %}">Gallery</a>
+    <a href="{% url 'home' %}#footer">Contact</a>
+</nav>
+        <div class="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="slider">
+          <img src="{% static 'img/ty5.jpeg' %}" class="slide active">
+<img src="{% static 'img/hg.JPG' %}" class="slide">
+<img src="{% static 'img/68.jpeg' %}" class="slide">
+        </div>
+        <div class="overlay"></div>
+        <div class="hero-content" data-aos="fade-right">
+            <h1 class="typewriter-title">
+    <span class="line1">Your Celebration</span><br>
+    <span class="line2">Starts Here</span>
+</h1>
+            <p class="fade-in-text">Luxury rooms, elegant banquet halls, and world-class hospitality.</p>
+            <div class="hero-buttons">
+                <button class="book-now-btn" onclick="openbookingsModal('Banquet Event', '₹2499', true)"><i class="fas fa-calendar-check"></i> Plan Your Event</button>
+            </div>
+        </div>
+    </section>
+    <!-- Rooms Section -->
+    <section class="rooms-section" id="rooms-section" data-aos="fade-up">
+        <h2 class="section-title"><i class="fas fa-star"></i> Our Luxury Rooms <i class="fas fa-star"></i></h2>
+        <div class="room-tabs">
+            <button class="active" data-filter="all">All Rooms</button>
+            <button data-filter="suite">Suite</button>
+            <button data-filter="deluxe">Deluxe</button>
+            <button data-filter="classic">Classic</button>
+        </div>
+        <div class="rooms-container">
+            <!-- Classic Room -->
+            <div class="room-card" data-category="classic" data-aos="fade-up">
+                <div class="room-image">
+                    <img src="{% static 'img/2.JPG' %}">
+                    <span class="room-label">Classic Room</span>
+                    <div class="room-price-tag"><div class="price-row">Single <strong>₹2,200</strong></div></div>
+                    <div class="room-price-right"><div class="price-row">Double <strong>₹2,500</strong></div></div>
+                </div>
+                <div class="room-details">
+                    <h3>Cozy & Comfortable Stay</h3>
+                    <p>Perfect for travelers looking for comfort and affordability.</p>
+                    <button class="book-room-btn" onclick="openbookingsModal('Classic Room', '₹2,200', false)">BOOK ROOM</button>
+                </div>
+            </div>
+            <!-- Deluxe Room -->
+            <div class="room-card" data-category="deluxe" data-aos="fade-up">
+                <div class="room-image">
+                    <img src="{% static 'img/er.JPG' %}">
+                    <span class="room-label">Deluxe Room</span>
+                    <div class="room-price-tag"><div class="price-row">Single <strong>₹2,625</strong></div></div>
+                    <div class="room-price-right"><div class="price-row">Double <strong>₹2,856</strong></div></div>
+                </div>
+                <div class="room-details">
+                    <h3>Modern & Premium Design</h3>
+                    <p>Enjoy elegant interiors with premium bedding.</p>
+                    <button class="book-room-btn" onclick="openbookingsModal('Deluxe Room', '₹2,625', false)">BOOK ROOM</button>
+                </div>
+            </div>
+            <!-- Suite Room -->
+            <div class="room-card" data-category="suite" data-aos="fade-up">
+                <div class="room-image">
+                    <img src="{% static 'img/as.JPG' %}">
+                    <span class="room-label">Suite Room</span>
+                    <div class="room-price-tag"><div class="price-row">Single <strong>₹3,500</strong></div></div>
+                    <div class="room-price-right"><div class="price-row">Double <strong>₹3,900</strong></div></div>
+                </div>
+                <div class="room-details">
+                    <h3>Luxury Suite Experience</h3>
+                    <p>Spacious suite featuring premium furniture.</p>
+                    <button class="book-room-btn" onclick="openbookingsModal('Suite Room', '₹3,500', false)">BOOK ROOM</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banquet Section -->
+    <section class="banquet-section" id="banquet-section" data-aos="fade-up">
+        <h2 class="section-title"><i class="fas fa-glass-cheers"></i> Banquet Hall <i class="fas fa-glass-cheers"></i></h2>
+        <div class="banquet-container">
+            <div class="banquet-card" data-aos="fade-up">
+                <div class="banquet-image">
+                    <img src="{% static 'img/68.jpeg' %}">
+                    <div class="banquet-price-tag"><div class="price-row">Starting <strong>₹2499</strong></div></div>
+                </div>
+                <div class="banquet-details">
+                    <h3>Classic Events</h3>
+                    <p>Budget-friendly option for birthday parties.</p>
+                    <button class="book-room-btn" onclick="openbookingsModal('Classic Events Banquet', '₹2499', true)">Book This Package</button>
+                </div>
+            </div>
+            <div class="banquet-card" data-aos="fade-up">
+                <div class="banquet-image">
+                     <img src="{% static 'img/ty5.jpeg' %}">
+                    <div class="banquet-price-tag"><div class="price-row">Starting <strong>₹3999</strong></div></div>
+                </div>
+                <div class="banquet-details">
+                    <h3>Elegant Gathering</h3>
+                    <p>Ideal for corporate events and conferences.</p>
+                    <button class="book-room-btn" onclick="openbookingsModal('Elegant Gathering Banquet', '₹3999', true)">Book This Package</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Banner -->
+    <section class="policy-banner" data-aos="fade-up">
+        <div class="policy-banner-content">
+            <h2>Stay Policy & Pricing</h2>
+            <p id="policyText">
+                                <i class="fas fa-check-circle"></i> GST: Applicable as per government norms<br>
+                <i class="fas fa-check-circle"></i> Tariffs: Rates may change without prior notice<br>
+                <i class="fas fa-check-circle"></i> Check-in: Flexible 23-hour stay policy available<br>
+                <i class="fas fa-check-circle"></i> Early Check-in / Late Check-out: Subject to availability<br>
+                <i class="fas fa-check-circle"></i> Check-out: 11:00 AM (late check-out available on request)<br>
+                <i class="fas fa-check-circle"></i> ID Requirement: Valid government ID mandatory at check-in<br>
+                <i class="fas fa-check-circle"></i> Extra Bed: ₹500 + GST (subject to availability; charged as per government norms)
+            </p>
+            <button class="view-details-btn" onclick="togglePolicy()">View Details</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" data-aos="fade-up">
+        <div class="footer-container">
+            <div class="footer-brand">
+                    <img src="{% static 'img/logo.png' %}" alt="NR Logo">
+                <h3>NARMADA RESIDENCY</h3>
+                <p>Experience premium living with world-class amenities and elegant lifestyle spaces.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1QXzxECX62/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/narmada_residency_hubli?igsh=MW96bGdyOGV1NDl5cA=="><i class="fab fa-instagram"></i></a>
+                    <a href="tel:+919481063333"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#rooms-section">Rooms & Suites</a></li>
+                    <li><a href="#banquet-section">Banquet Hall</a></li>
+                    <li><a href="#footer">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Free Parking</a></li>
+                    <li><a href="#">Daily Housekeeping</a></li>
+                    <li><a href="#">Elevator Access</a></li>
+                    <li><a href="#">24/7 Reception</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p><i class="fas fa-phone-alt"></i> <a href="tel:9481063333">9481063333 | 0836-3534750</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:narmadaresidencyhubli@gmail.com">narmadaresidencyhubli@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Narmada Residency. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- bookings MODAL -->
+    <div id="bookingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="step1" class="step active">
+                <h2>Book <span id="modalRoomName">Room</span></h2>
+                <div class="modal-price"><label id="priceLabel"></label>Price:</label> <span id="modalPrice">₹0</span><span id="priceUnit">/night</span></div>
+                <form id="bookingsForm">
+                    <div class="form-group">
+                        <label id="dateLabel">Check-in Date</label>
+                        <input type="date" id="checkinDate" required>
+                    </div>
+                    <div id="checkoutGroup" class="form-group">
+                        <label id="checkoutLabel">Check-out Date</label>
+                        <input type="date" id="checkoutDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Guests</label>
+                        <input type="number" id="guests" value="1" min="1" required>
+                        <small id="guestNote" style="display: none; color: #666; font-size: 0.9em;">Price will be calculated per person</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+91 12345 67890" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email (Optional)</label>
+                        <input type="email" id="email" placeholder="example@email.com">
+                    </div>
+                    <button type="button" class="next-btn" onclick="goToStep2()">Next</button>
+                </form>
+            </div>
+            <div id="step2" class="step">
+                <h2>Confirm bookings</h2>
+                <div class="bookings-summary">
+                    <p><strong>Booking Type:</strong> <span id="summaryBookingType">Room Booking</span></p>
+                    <p><strong>Price:</strong> <span id="summaryPrice">₹0</span>/night</p>
+                    <p><strong>Check-in:</strong> <span id="summaryCheckin">-</span></p>
+                    <p><strong>Check-out:</strong> <span id="summaryCheckout">-</span></p>
+                    <p><strong>Guests:</strong> <span id="summaryGuests">1</span></p>
+                    <p><strong>Name:</strong> <span id="summaryName">-</span></p>
+                    <p><strong>Phone:</strong> <span id="summaryPhone">-</span></p>
+                    <p><strong>Email:</strong> <span id="summaryEmail">-</span></p>
+                </div>
+                <div class="payment-options">
+                    <label>Payment Option</label>
+                    <div>
+                        <input type="radio" name="payment" value="hotel" id="payHotel" checked>
+                        <label for="payHotel"><strong>Pay at Hotel</strong><br><span>Complete payment during check-in</span></label>
+                    </div>
+                    <div>
+                        <input type="radio" name="payment" value="advance" id="payAdvance">
+                        <label for="payAdvance"><strong>Non-refundable Advance</strong><br><span>Pay now and save 10%</span></label>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="back-btn" onclick="goToStep1()">Back</button>
+                    <button type="button" class="submit-btn" onclick="submitbookings()">Confirm bookings</button>
+                </div>
+            </div>
+            <div id="step3" class="step">
+                <div class="success-message">
+                    <div class="success-icon">✓</div>
+                    <h3>Bookings Request Sent !</h3>
+                    <p>Your bookings request has been received. We will contact you shortly to confirm your reservation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{% static 'js/script.min.js' %}"></script>
+
+<!-- WhatsApp Chat Icon (Floating) -->
+<a href="https://wa.me/919481063333" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+</html>
