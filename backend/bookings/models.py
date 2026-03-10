@@ -1,34 +1,53 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Booking(models.Model):   # ✅ Capital B
-    room_type = models.CharField(max_length=100)
+# Room type choices
+ROOM_TYPE_CHOICES = [
+    ('classic', 'Classic Room'),
+    ('deluxe', 'Deluxe Room'),
+    ('suite', 'Suite Room'),
+    ('other', 'Other Room'),
+]
+
+# Banquet type choices
+BANQUET_TYPE_CHOICES = [
+    ('birthday', 'Birthday Celebration'),
+    ('wedding', 'Wedding Ceremony'),
+    ('engagement', 'Engagement Party'),
+    ('anniversary', 'Anniversary Celebration'),
+    ('ceremony', 'Naming Ceremony'),
+    ('general', 'General Banquet Event'),
+    ('other', 'Other Banquet'),
+]
+
+class RoomBooking(models.Model):   # 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    room_type = models.CharField(max_length=20, choices=ROOM_TYPE_CHOICES, default='classic')
     price = models.CharField(max_length=50)
     check_in = models.DateField()
     check_out = models.DateField()
     guests = models.IntegerField()
     name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     phone = models.CharField(max_length=15)
     payment_method = models.CharField(max_length=50)  # 'hotel' or 'advance'
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.room_type}"
+        return f"{self.name} - {self.get_room_type_display()} (Room)"
 
 
-class Gallery(models.Model):
-    CATEGORY_CHOICES = [
-      ('rooms', 'Rooms'),
-        ('banquet', 'Banquet'),
-        ('interior', 'Interior'),
-        ('exterior', 'Exterior'),
-        ('bathroom', 'Bathroom'),
-    ]
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
-    image = models.ImageField(upload_to='gallery/')
-    caption = models.CharField(max_length=200, blank=True)
+class BanquetBooking(models.Model):
+    banquet_type = models.CharField(max_length=20, choices=BANQUET_TYPE_CHOICES, default='general')
+    price_per_person = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    event_date = models.DateField()
+    guests = models.IntegerField()
+    name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=15)
+    payment_method = models.CharField(max_length=50)  # 'hotel' or 'advance'
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.category} - {self.caption}"
-    
+        return f"{self.name} - {self.get_banquet_type_display()} (Banquet)"

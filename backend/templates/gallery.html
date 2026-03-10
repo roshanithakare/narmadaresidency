@@ -56,7 +56,8 @@
     height: 60px;
     width: auto;
     padding-left: 70px;
-    filter: brightness(0) saturate(100%) sepia(100%) hue-rotate(10deg) saturate(500%);
+    /* filter: brightness(0) invert(1); */
+    transition: all 0.3s ease;
 }
 header.scrolled .logo img {
     filter: none;
@@ -225,68 +226,15 @@ header.scrolled .logo img {
               
         </div>
         <div class="gallery-container">
-
-    <!-- Exterior -->
-    <div class="gallery-item" data-category="exterior">
-        <img src="{% static 'img/ty5.jpeg' %}" alt="Hotel Exterior">
-        <div class="gallery-caption">Hotel Exterior</div>
-    </div>
-
-    <div class="gallery-item" data-category="exterior">
-        <img src="{% static 'img/hg.JPG' %}" alt="Hotel Entrance">
-        <div class="gallery-caption">Hotel Entrance</div>
-    </div>
-
-    <!-- Interior -->
-    <div class="gallery-item" data-category="interior">
-        <img src="{% static 'img/2.JPG' %}" alt="Classic Room">
-        <div class="gallery-caption">Classic Room</div>
-    </div>
-
-    <div class="gallery-item" data-category="interior">
-        <img src="{% static 'img/er.JPG' %}" alt="Deluxe Room">
-        <div class="gallery-caption">Deluxe Room</div>
-    </div>
-
-    <div class="gallery-item" data-category="interior">
-        <img src="{% static 'img/as.JPG' %}" alt="Suite Room">
-        <div class="gallery-caption">Suite Room</div>
-    </div>
-
-    <!-- Bathroom -->
-    <div class="gallery-item" data-category="bathroom">
-        <img src="{% static 'img/modern bathroom.jpg' %}" alt="Modern Bathroom">
-        <div class="gallery-caption">Modern Bathroom</div>
-    </div>
-
-    <div class="gallery-item" data-category="bathroom">
-        <img src="{% static 'img/luxury bathroom.jpg' %}" alt="Luxury Bathroom">
-        <div class="gallery-caption">Luxury Bathroom</div>
-    </div>
-
-    <!-- Banquet -->
-    <div class="gallery-item" data-category="banquet">
-        <img src="{% static 'img/68.jpeg' %}" alt="Banquet Setup">
-        <div class="gallery-caption">Banquet Setup</div>
-    </div>
-
-    <div class="gallery-item" data-category="banquet">
-        <img src="{% static 'img/123.jpeg' %}" alt="Grand Banquet">
-        <div class="gallery-caption">Grand Banquet</div>
-    </div>
-
-    <!-- Rooms -->
-    <div class="gallery-item" data-category="rooms">
-        <img src="{% static 'img/room1.jpg' %}" alt="Room 1">
-        <div class="gallery-caption">Single Room</div>
-    </div>
-
-    <div class="gallery-item" data-category="rooms">
-        <img src="{% static 'img/room2.jpg' %}" alt="Room 2">
-        <div class="gallery-caption">Quad Room</div>
-    </div>
-
-</div>
+            {% for image in images %}
+            <div class="gallery-item" data-category="{{ image.category }}">
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}">
+                <div class="gallery-caption">{{ image.caption }}</div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; grid-column: 1/-1; padding: 50px;">No images in gallery yet.</p>
+            {% endfor %}
+        </div>
         <a href="{% url 'home' %}" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
     </section>
 

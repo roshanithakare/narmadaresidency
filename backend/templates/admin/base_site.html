@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block branding %}
+<h1 id="site-name">
+    <img src="/static/img/logo.png" alt="Narmada Residency" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+    <span style="vertical-align: middle;">Narmada Residency Admin</span>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    #site-name {
+        display: flex;
+        align-items: center;
+    }
+    #header {
+        background: #2c3e50;
+        border-bottom: none;
+    }
+    #branding h1 {
+        color: white;
+        font-size: 18px;
+    }
+    .dashboard #content {
+        margin: 0;
+    }
+    /* Hide Groups from sidebar, but show Users */
+    .app-auth .model-group {
+        display: none !important;
+    }
+    /* Hide action columns */
+    .action-checkbox-column,
+    .actions {
+        display: none !important;
+    }
+    /* Reorder admin modules - Users first, then Bookings, then Gallery */
+    .app-auth {
+        order: 0;
+    }
+    .app-bookings {
+        order: 1;
+    }
+    /* Ensure proper ordering within Bookings */
+    .app-bookings .model-roombooking {
+        order: 0;
+    }
+    .app-bookings .model-banquetbooking {
+        order: 1;
+    }
+    .app-bookings .model-gallery {
+        order: 2;
+    }
+    .app-bookings + .module {
+        order: 3;
+        display: block !important;
+    }
+    .app-bookings + .module caption {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-list{% endblock %}

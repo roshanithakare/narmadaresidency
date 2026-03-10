@@ -80,6 +80,42 @@ header.scrolled {
     background: #128c7e;
 }
 
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
+    z-index: 1199;
+    background: #f39c12;
+    color: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: #e67e22;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
 #scrollToTopBtn.scroll-top-float.show {
     opacity: 1;
     pointer-events: auto;
@@ -94,7 +130,7 @@ header.scrolled {
     height: 60px;
     width: auto;
     padding-left: 70px;
-    filter: brightness(0) invert(1);
+    /* filter: brightness(0) invert(1); */
     transition: all 0.3s ease;
 }
 
@@ -206,13 +242,72 @@ header.scrolled .hamburger span {
     animation: fadeInLeft 1s ease-out;
 }
 
-.hero-content h1 {
+.typewriter-title {
     font-size: 56px;
     color: #fff;
     margin-bottom: 20px;
     font-weight: 700;
     line-height: 1.2;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.typewriter-title .line1 {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typingLine1 2s steps(16) forwards;
+}
+
+.typewriter-title .line2 {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typingLine2 2s steps(11) forwards 2s;
+}
+
+/* typing animation for line 1 */
+@keyframes typingLine1 {
+    from {
+        width: 0;
+    }
+    to {
+        width: 16ch;
+    }
+}
+
+/* typing animation for line 2 */
+@keyframes typingLine2 {
+    from {
+        width: 0;
+    }
+    to {
+        width: 11ch;
+    }
+}
+
+/* cursor blinking */
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+.fade-in-text {
+    opacity: 0;
+    animation: fadeInText 2s ease-in-out 3s forwards;
+}
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-content p {
@@ -551,7 +646,7 @@ header.scrolled .hamburger span {
 .policy-banner-content {
     max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
     background: #f5e6d3;
     padding: 50px 60px;
     border-radius: 15px;
@@ -567,7 +662,7 @@ header.scrolled .hamburger span {
 
 #policyText {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
     color: #333;
     line-height: 1.8;
     margin-bottom: 35px;
@@ -769,7 +864,7 @@ footer {
 }
 
 .step {
-    padding: 30px;
+    padding: 25px;
     display: none;
 }
 
@@ -784,9 +879,9 @@ footer {
 
 .modal-price {
     background: #fef5e7;
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     color: #f39c12;
 }
@@ -804,7 +899,7 @@ footer {
 
 .form-group input {
     width: 100%;
-    padding: 12px;
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
@@ -1039,7 +1134,7 @@ footer {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 80%;
+        width: 50%;
         height: 100vh;
         background: #fff;
         flex-direction: column;

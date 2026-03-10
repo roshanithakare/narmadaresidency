@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Narmada Residency</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -38,14 +39,16 @@
         </div>
         <div class="overlay"></div>
         <div class="hero-content" data-aos="fade-right">
-            <h1>Your Celebration Starts Here</h1>
-            <p>Luxury rooms, elegant banquet halls, and world-class hospitality.</p>
+            <h1 class="typewriter-title">
+    <span class="line1">Your Celebration</span><br>
+    <span class="line2">Starts Here</span>
+</h1>
+            <p class="fade-in-text">Luxury rooms, elegant banquet halls, and world-class hospitality.</p>
             <div class="hero-buttons">
-                <button class="book-now-btn" onclick="openbookingsModal('Banquet Event', '₹2499')"><i class="fas fa-calendar-check"></i> Plan Your Event</button>
+                <button class="book-now-btn" onclick="openbookingsModal('Banquet Event', '₹2499', true)"><i class="fas fa-calendar-check"></i> Plan Your Event</button>
             </div>
         </div>
     </section>
-
     <!-- Rooms Section -->
     <section class="rooms-section" id="rooms-section" data-aos="fade-up">
         <h2 class="section-title"><i class="fas fa-star"></i> Our Luxury Rooms <i class="fas fa-star"></i></h2>
@@ -67,7 +70,7 @@
                 <div class="room-details">
                     <h3>Cozy & Comfortable Stay</h3>
                     <p>Perfect for travelers looking for comfort and affordability.</p>
-                    <button class="book-room-btn" onclick="openbookingsModal('Classic Room', '₹2,200')">BOOK ROOM</button>
+                    <button class="book-room-btn" onclick="openbookingsModal('Classic Room', '₹2,200', false)">BOOK ROOM</button>
                 </div>
             </div>
             <!-- Deluxe Room -->
@@ -81,7 +84,7 @@
                 <div class="room-details">
                     <h3>Modern & Premium Design</h3>
                     <p>Enjoy elegant interiors with premium bedding.</p>
-                    <button class="book-room-btn" onclick="openbookingsModal('Deluxe Room', '₹2,625')">BOOK ROOM</button>
+                    <button class="book-room-btn" onclick="openbookingsModal('Deluxe Room', '₹2,625', false)">BOOK ROOM</button>
                 </div>
             </div>
             <!-- Suite Room -->
@@ -95,7 +98,7 @@
                 <div class="room-details">
                     <h3>Luxury Suite Experience</h3>
                     <p>Spacious suite featuring premium furniture.</p>
-                    <button class="book-room-btn" onclick="openbookingsModal('Suite Room', '₹3,500')">BOOK ROOM</button>
+                    <button class="book-room-btn" onclick="openbookingsModal('Suite Room', '₹3,500', false)">BOOK ROOM</button>
                 </div>
             </div>
         </div>
@@ -113,7 +116,7 @@
                 <div class="banquet-details">
                     <h3>Classic Events</h3>
                     <p>Budget-friendly option for birthday parties.</p>
-                    <button class="book-room-btn" onclick="openbookingsModal('Classic Events Banquet', '₹2499')">Book This Package</button>
+                    <button class="book-room-btn" onclick="openbookingsModal('Classic Events Banquet', '₹2499', true)">Book This Package</button>
                 </div>
             </div>
             <div class="banquet-card" data-aos="fade-up">
@@ -124,7 +127,7 @@
                 <div class="banquet-details">
                     <h3>Elegant Gathering</h3>
                     <p>Ideal for corporate events and conferences.</p>
-                    <button class="book-room-btn" onclick="openbookingsModal('Elegant Gathering Banquet', '₹3999')">Book This Package</button>
+                    <button class="book-room-btn" onclick="openbookingsModal('Elegant Gathering Banquet', '₹3999', true)">Book This Package</button>
                 </div>
             </div>
         </div>
@@ -135,7 +138,6 @@
         <div class="policy-banner-content">
             <h2>Stay Policy & Pricing</h2>
             <p id="policyText">
-                <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-check-circle"></i> GST: Applicable as per government norms<br>
                 <i class="fas fa-check-circle"></i> Tariffs: Rates may change without prior notice<br>
                 <i class="fas fa-check-circle"></i> Check-in: Flexible 23-hour stay policy available<br>
@@ -196,19 +198,20 @@
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div id="step1" class="step active">
                 <h2>Book <span id="modalRoomName">Room</span></h2>
-                <div class="modal-price">Price: <span id="modalPrice">₹0</span>/night</div>
+                <div class="modal-price"><label id="priceLabel"></label>Price:</label> <span id="modalPrice">₹0</span><span id="priceUnit">/night</span></div>
                 <form id="bookingsForm">
                     <div class="form-group">
-                        <label>Check-in Date</label>
+                        <label id="dateLabel">Check-in Date</label>
                         <input type="date" id="checkinDate" required>
                     </div>
-                    <div class="form-group">
-                        <label>Check-out Date</label>
+                    <div id="checkoutGroup" class="form-group">
+                        <label id="checkoutLabel">Check-out Date</label>
                         <input type="date" id="checkoutDate" required>
                     </div>
                     <div class="form-group">
                         <label>Number of Guests</label>
                         <input type="number" id="guests" value="1" min="1" required>
+                        <small id="guestNote" style="display: none; color: #666; font-size: 0.9em;">Price will be calculated per person</small>
                     </div>
                     <div class="form-group">
                         <label>Full Name</label>
@@ -228,13 +231,14 @@
             <div id="step2" class="step">
                 <h2>Confirm bookings</h2>
                 <div class="bookings-summary">
-                    <p><strong>Room:</strong> <span id="summaryRoomName">Room</span></p>
+                    <p><strong>Booking Type:</strong> <span id="summaryBookingType">Room Booking</span></p>
                     <p><strong>Price:</strong> <span id="summaryPrice">₹0</span>/night</p>
                     <p><strong>Check-in:</strong> <span id="summaryCheckin">-</span></p>
                     <p><strong>Check-out:</strong> <span id="summaryCheckout">-</span></p>
                     <p><strong>Guests:</strong> <span id="summaryGuests">1</span></p>
                     <p><strong>Name:</strong> <span id="summaryName">-</span></p>
                     <p><strong>Phone:</strong> <span id="summaryPhone">-</span></p>
+                    <p><strong>Email:</strong> <span id="summaryEmail">-</span></p>
                 </div>
                 <div class="payment-options">
                     <label>Payment Option</label>
@@ -255,16 +259,15 @@
             <div id="step3" class="step">
                 <div class="success-message">
                     <div class="success-icon">✓</div>
-                    <h3>bookings Confirmed!</h3>
+                    <h3>Bookings Request Sent !</h3>
                     <p>Your bookings request has been received. We will contact you shortly to confirm your reservation.</p>
-                    <button class="close-success" onclick="closeModal()">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/script.min.js' %}"></script>
 
 <!-- WhatsApp Chat Icon (Floating) -->
 <a href="https://wa.me/919481063333" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">

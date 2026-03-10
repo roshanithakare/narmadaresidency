@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'bookings', 
+     'bookings',
+     'gallery.apps.GalleryConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'bookings.context_processors.calendar_context',
             ],
         },
     },
@@ -124,3 +126,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Admin site configuration
+ADMIN_TITLE = 'Narmada Residency Administration'
+ADMIN_HEADER = 'Narmada Residency Admin'
+ADMIN_INDEX_TITLE = 'Welcome to Narmada Residency Admin Portal'
