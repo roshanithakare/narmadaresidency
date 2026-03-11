@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import RoomBooking, BanquetBooking
 import json
+import csv
+from datetime import datetime
 
 @csrf_exempt
 @require_http_methods(["GET"])
@@ -196,3 +199,163 @@ def index(request):
 def gallery(request):
     images = Gallery.objects.all()
     return render(request, 'gallery.html', {'images': images})
+
+
+@staff_member_required
+def export_room_bookings_csv(request):
+    """Export room bookings to CSV"""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=f"room_bookings_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Header row
+    writer.writerow([
+        'Booking ID', 'Room Type', 'Price', 'Check-in Date', 'Check-out Date',
+        'Number of Guests', 'Customer Name', 'Email', 'Phone', 'Payment Method',
+        'Booking Date', 'Total Nights'
+    ])
+    
+    # Data rows
+    bookings = RoomBooking.objects.all().order_by('-created_at')
+    for booking in bookings:
+        # Calculate total nights
+        total_nights = (booking.check_out - booking.check_in).days
+        
+        writer.writerow([
+            booking.id,
+            booking.get_room_type_display(),
+            booking.price,
+            booking.check_in.strftime('%Y-%m-%d'),
+            booking.check_out.strftime('%Y-%m-%d'),
+            booking.guests,
+            booking.name,
+            booking.email,
+            booking.phone,
+            booking.payment_method,
+            booking.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            total_nights
+        ])
+    
+    return response
+
+
+@staff_member_required
+def export_banquet_bookings_csv(request):
+    """Export banquet bookings to CSV"""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=f"banquet_bookings_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Header row
+    writer.writerow([
+        'Booking ID', 'Banquet Type', 'Price Per Person', 'Total Price',
+        'Event Date', 'Number of Guests', 'Customer Name', 'Email', 'Phone',
+        'Payment Method', 'Booking Date'
+    ])
+    
+    # Data rows
+    bookings = BanquetBooking.objects.all().order_by('-created_at')
+    for booking in bookings:
+        writer.writerow([
+            booking.id,
+            booking.get_banquet_type_display(),
+            f"₹{booking.price_per_person}",
+            f"₹{booking.total_price}",
+            booking.event_date.strftime('%Y-%m-%d'),
+            booking.guests,
+            booking.name,
+            booking.email,
+            booking.phone,
+            booking.payment_method,
+            booking.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+    
+    return response
+
+
+@staff_member_required
+def export_all_bookings_csv(request):
+    """Export all bookings (room + banquet) to CSV"""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=f"all_bookings_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Header row
+    writer.writerow([
+        'Booking ID', 'Booking Type', 'Room/Banquet Type', 'Price',
+        'Event/Check-in Date', 'Check-out Date', 'Number of Guests',
+        'Customer Name', 'Email', 'Phone', 'Payment Method', 'Booking Date',
+        'Total Nights', 'Total Price'
+    ])
+    
+    # Room bookings
+    room_bookings = RoomBooking.objects.all().order_by('-created_at')
+    for booking in room_bookings:
+        total_nights = (booking.check_out - booking.check_in).days
+        writer.writerow([
+            booking.id,
+            'Room Booking',
+            booking.get_room_type_display(),
+            booking.price,
+            booking.check_in.strftime('%Y-%m-%d'),
+            booking.check_out.strftime('%Y-%m-%d'),
+            booking.guests,
+            booking.name,
+            booking.email,
+            booking.phone,
+            booking.payment_method,
+            booking.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            total_nights,
+            booking.price  # For rooms, price is typically per night
+        ])
+    
+    # Banquet bookings
+    banquet_bookings = BanquetBooking.objects.all().order_by('-created_at')
+    for booking in banquet_bookings:
+        writer.writerow([
+            booking.id,
+            'Banquet Booking',
+            booking.get_banquet_type_display(),
+            f"₹{booking.price_per_person}/person",
+            booking.event_date.strftime('%Y-%m-%d'),
+            '',  # No checkout for banquet
+            booking.guests,
+            booking.name,
+            booking.email,
+            booking.phone,
+            booking.payment_method,
+            booking.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            '',  # No nights for banquet
+            f"₹{booking.total_price}"
+        ])
+    
+    return response
+
+
+@staff_member_required
+def admin_exports(request):
+    """Admin page for exporting bookings"""
+    from django.utils import timezone
+    
+    # Get statistics
+    room_count = RoomBooking.objects.count()
+    banquet_count = BanquetBooking.objects.count()
+    total_count = room_count + banquet_count
+    
+    # Get today's bookings
+    today = timezone.now().date()
+    today_room_count = RoomBooking.objects.filter(created_at__date=today).count()
+    today_banquet_count = BanquetBooking.objects.filter(created_at__date=today).count()
+    today_count = today_room_count + today_banquet_count
+    
+    context = {
+        'room_count': room_count,
+        'banquet_count': banquet_count,
+        'total_count': total_count,
+        'today_count': today_count,
+    }
+    
+    return render(request, 'admin_exports.html', context)

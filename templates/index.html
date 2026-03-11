@@ -219,7 +219,7 @@
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="tel" id="phone" placeholder="+91 12345 67890" required>
+                        <input type="tel" id="phone" placeholder="+91 12345 67890" required maxlength="10" pattern="[0-9]{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <div class="form-group">
                         <label>Email (Optional)</label>
@@ -267,7 +267,7 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="{% static 'js/script.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 <!-- WhatsApp Chat Icon (Floating) -->
 <a href="https://wa.me/919481063333" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">

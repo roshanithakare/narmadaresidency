@@ -453,6 +453,95 @@ AOS.init({
 });
 
 // ===============================
+// ENHANCED PAGE LOAD ANIMATIONS
+// ===============================
+document.addEventListener("DOMContentLoaded", function() {
+    // Hero content animation
+    const heroContent = document.querySelector(".hero-content");
+    if (heroContent) {
+        heroContent.style.opacity = "0";
+        heroContent.style.transform = "translateX(-50px)";
+        setTimeout(() => {
+            heroContent.style.transition = "all 1s ease-out";
+            heroContent.style.opacity = "1";
+            heroContent.style.transform = "translateX(0)";
+        }, 300);
+    }
+
+    // Room cards staggered animation
+    const roomCards = document.querySelectorAll(".room-card");
+    roomCards.forEach((card, index) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(30px)";
+        setTimeout(() => {
+            card.style.transition = "all 0.6s ease-out";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+        }, 800 + (index * 150));
+    });
+
+    // Banquet cards staggered animation
+    const banquetCards = document.querySelectorAll(".banquet-card");
+    banquetCards.forEach((card, index) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(30px)";
+        setTimeout(() => {
+            card.style.transition = "all 0.6s ease-out";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+        }, 1200 + (index * 150));
+    });
+
+    // Section titles animation
+    const sectionTitles = document.querySelectorAll(".section-title");
+    sectionTitles.forEach((title, index) => {
+        title.style.opacity = "0";
+        title.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            title.style.transition = "all 0.8s ease-out";
+            title.style.opacity = "1";
+            title.style.transform = "translateY(0)";
+        }, 600 + (index * 200));
+    });
+
+    // Footer sections staggered animation
+    const footerSections = document.querySelectorAll(".footer-container > div");
+    footerSections.forEach((section, index) => {
+        section.style.opacity = "0";
+        section.style.transform = "translateY(20px)";
+        setTimeout(() => {
+            section.style.transition = "all 0.6s ease-out";
+            section.style.opacity = "1";
+            section.style.transform = "translateY(0)";
+        }, 1500 + (index * 100));
+    });
+
+    // WhatsApp floating button animation
+    const whatsappFloat = document.querySelector(".whatsapp-float");
+    if (whatsappFloat) {
+        whatsappFloat.style.opacity = "0";
+        whatsappFloat.style.transform = "scale(0) rotate(180deg)";
+        setTimeout(() => {
+            whatsappFloat.style.transition = "all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+            whatsappFloat.style.opacity = "1";
+            whatsappFloat.style.transform = "scale(1) rotate(0deg)";
+        }, 2000);
+    }
+
+    // Policy banner animation
+    const policyBanner = document.querySelector(".policy-banner");
+    if (policyBanner) {
+        policyBanner.style.opacity = "0";
+        policyBanner.style.transform = "translateY(50px)";
+        setTimeout(() => {
+            policyBanner.style.transition = "all 0.8s ease-out";
+            policyBanner.style.opacity = "1";
+            policyBanner.style.transform = "translateY(0)";
+        }, 1800);
+    }
+});
+
+// ===============================
 // SMOOTH SCROLL
 // ===============================
 document.querySelectorAll('a[href*="#"]').forEach(anchor => {
