@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-!2vm76h5_1p1l-7@nn_@lf*y!p1&@2o5c7=jon4=dnao%_xmt-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -39,16 +40,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'bookings',
      'gallery.apps.GalleryConfig',
+    'corsheaders',  
+    'rest_framework',  
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -117,9 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static')
 ]
 
 MEDIA_URL = '/media/'
@@ -131,3 +138,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ADMIN_TITLE = 'Narmada Residency Administration'
 ADMIN_HEADER = 'Narmada Residency Admin'
 ADMIN_INDEX_TITLE = 'Welcome to Narmada Residency Admin Portal'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Production settings for Render deployment
+import os
+
+# Security settings for production
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_REDIRECT_EXEMPT = []
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# CORS settings for frontend-backend communication
+CORS_ALLOWED_ORIGINS = [
+    "https://your-domain.vercel.app",  # Replace with your Vercel domain
+    "https://www.your-domain.vercel.app",  # Replace with your Vercel domain
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow all origins in development
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
